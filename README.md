@@ -15,6 +15,9 @@
   <p align="center">
     An advanced E-Commerce platform built with HTML, CSS, Bootstrap 5, Node.js, Express, Prisma ORM, and PostgreSQL, offering dynamic features for product management, user authentication, shopping cart functionality, and Stripe-based payment processing. The project also includes a fully functional admin panel and an intuitive user interface built with modern web development practices.
     <br />
+    <a href="https://ecommerce-fullstack-4v1t.onrender.com/"><strong>Live Demo »</strong></a>
+    <h5>email: hazem@admin.com, password: secret</h5>
+    <br />
     <a href="http://localhost:3000/api-docs/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -43,6 +46,10 @@ Built with:
 <div align="center">
   <img src="https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,express,postgres,prisma" /><br>
 </div>
+
+## Images
+<img src="https://i.imgur.com/EOxBxUP.jpeg" alt="Image">
+
 
 ## Getting Started
 
