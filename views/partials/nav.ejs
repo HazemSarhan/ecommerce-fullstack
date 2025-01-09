@@ -1,0 +1,100 @@
+<!-- Discount -->
+<div class="black bg-black text-white py-2">
+  <div class="container">
+    <section class="top-discount d-flex justify-content-between">
+      <div class="text text-center m-auto">
+        <h6>
+          Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
+          <a href="#" class="">ShopNow</a>
+        </h6>
+      </div>
+      <div class="language d-flex gap-2 align-items-center">
+        <h6>English</h6>
+        <i class="fa-solid fa-arrow-down"></i>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-transparent">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Exclusive</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav m-auto my-2 mb-lg-0 gap-4">
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'index' ? 'active' : '' %>"
+            href="/"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>"
+            href="/contact"
+            >Contact</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'about' ? 'active' : '' %>"
+            href="/about"
+            >About</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'products' ? 'active' : '' %>"
+            href="/products"
+            >Products</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'sign-up' ? 'active' : '' %>"
+            href="/sign-up"
+            >Sign Up</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= currentPage === 'login' ? 'active' : '' %>"
+            href="/login"
+            >Login</a
+          >
+        </li>
+      </ul>
+      <form class="d-flex position-relative w-25" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="What are you looking for?"
+          aria-label="Search"
+        />
+        <button class="btn position-absolute top-0 end-0" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+      <div
+        class="buttons d-flex justify-content-center align-items-center gap-3 pe-5"
+      >
+        <a href="/wishlist"><i class="fa-regular fa-heart"></i></a>
+        <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="/account"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+</nav>
+<hr />

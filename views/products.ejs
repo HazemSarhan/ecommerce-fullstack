@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="about my-5">
+      <div class="container">
+        <div class="top mt-5 pt-5">
+          <span class="text-muted"
+            ><a href="/index.html">Home</a> /
+            <span class="text-black"> Products</span></span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="products my-5">
+      <div class="container mt-5">
+        <div class="row">
+          <% if (products && products.length > 0) { %> <%
+          products.forEach((product) => { %>
+          <div class="col-md-3">
+            <div class="card rounded-0 shadow-lg mb-3">
+              <!-- Product Image -->
+              <div class="card-image position-relative">
+                <img
+                  src="<%= product.picture || '/images/default-product.png' %>"
+                  alt="<%= product.name %>"
+                  class="img-fluid"
+                />
+
+                <!-- Wishlist Icon -->
+                <a
+                  href="/wishlist/add/<%= product.id %>"
+                  class="discount position-absolute top-0 end-0 me-2"
+                >
+                  <i
+                    class="fa-solid fa-heart main-color fa-xl rounded-circle bg-white p-2"
+                  ></i>
+                </a>
+
+                <!-- View Product Icon -->
+                <a
+                  href="/single-product/<%= product.id %>"
+                  class="discount-2 position-absolute top-0 end-0 me-2"
+                >
+                  <i
+                    class="fa-solid fa-eye main-color fa-xl rounded-circle bg-white p-2"
+                  ></i>
+                </a>
+              </div>
+
+              <!-- Product Details -->
+              <div class="card-body">
+                <h6><%= product.name %></h6>
+
+                <!-- Price and Add to Cart -->
+                <div class="cart d-flex gap-3">
+                  <% if (product.discount) { %>
+                  <span class="main-color">
+                    $<%= (product.price - (product.price *
+                    product.discount.discount / 100)).toFixed(2) %>
+                  </span>
+                  <span class="text-decoration-line-through text-muted">
+                    $<%= product.price.toFixed(2) %>
+                  </span>
+                  <% } else { %>
+                  <span class="main-color"
+                    >$<%= product.price.toFixed(2) %></span
+                  >
+                  <% } %>
+                  <a href="/cart/add/<%= product.id %>">
+                    <i class="fa-solid fa-cart-shopping text-black fa-sm"></i>
+                  </a>
+                </div>
+
+                <!-- Ratings -->
+                <div class="stars mt-2">
+                  <% for (let i = 0; i < Math.floor(product.averageRatings);
+                  i++) { %>
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <% } %> <% for (let i = Math.floor(product.averageRatings); i
+                  < 5; i++) { %>
+                  <i class="fa-solid fa-star text-muted"></i>
+                  <% } %>
+                  <span>(<%= product.numberOfReviews %>)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }); %> <% } else { %>
+          <p class="text-center">No products available.</p>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

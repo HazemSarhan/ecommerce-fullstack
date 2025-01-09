@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="single-product">
+      <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6">
+          <div class="image my-5">
+            <img
+              src="<%= product.picture || '/images/default-product.png' %>"
+              alt="<%= product.name %>"
+              class="img-fluid"
+            />
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-3 m-auto">
+          <h1 class="fw-bold"><%= product.name %></h1>
+
+          <!-- Ratings -->
+          <div class="stars mt-2">
+            <% for (let i = 0; i < Math.floor(product.averageRatings); i++) { %>
+              <i class="fa-solid fa-star text-warning"></i>
+            <% } %>
+            <% for (
+              let i = Math.floor(product.averageRatings);
+              i < 5;
+              i++
+            ) { %>
+              <i class="fa-solid fa-star text-muted"></i>
+            <% } %>
+            <span>(<%= product.numberOfReviews %>)</span>
+          </div>
+
+          <p>
+            <span class="fw-bold"><%= product.quantity %> in stock</span> in past
+            month
+          </p>
+          <span class="main-color fs-5 fw-bold">$<%= product.price.toFixed(2) %></span>
+          <p>All prices include VAT.</p>
+
+          <!-- Product Icons -->
+          <div class="product-icons d-flex">
+            <div class="first">
+              <i class="fa-solid fa-money-bill-wave rounded-circle"></i>
+              <p class="w-50">Cash Delivery</p>
+            </div>
+            <div class="second">
+              <i class="fa-solid fa-rotate-left rounded-circle"></i>
+              <p class="w-50">30 days Returnable</p>
+            </div>
+            <div class="third">
+              <i class="fa-solid fa-truck rounded-circle"></i>
+              <p class="w-50">Free Delivery</p>
+            </div>
+          </div>
+          <hr />
+
+          <!-- About -->
+          <h5>About this item</h5>
+          <ul>
+            <% product.about.forEach((detail) => { %>
+              <li><%= detail %></li>
+            <% }); %>
+          </ul>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-3 m-auto">
+          <div class="card p-3 border-0">
+            <span class="main-color fs-5 fw-bold">$<%= product.price.toFixed(2) %></span>
+            <p>FREE Returns</p>
+            <p>
+              FREE delivery Tomorrow, <%= new Date().toLocaleDateString() %>.
+              Order within 5 hrs 3 mins
+            </p>
+            <div class="delivry d-flex gap-2">
+              <i class="fa-solid fa-location-dot fa-xl"></i>
+              <p class="text-muted">Delivering to Riyadh - Update location</p>
+            </div>
+            <div class="stock">
+              <h4 class="<%= product.quantity > 0 ? 'text-success' : 'text-danger' %>">
+                <%= product.quantity > 0 ? 'In Stock' : 'Out of Stock' %>
+              </h4>
+
+              <!-- Choose Quantity -->
+              <div class="quantity">
+                <label for="quantity" class="form-label">Quantity: </label>
+                <select id="productQuantity" class="form-select" aria-label="Default select example">
+                  <% for (let i = 1; i <= Math.min(product.quantity, 10); i++) { %>
+                    <option value="<%= i %>"><%= i %></option>
+                  <% } %>
+                </select>
+              </div>
+
+              <!-- Buttons -->
+              <div class="buttons text-center">
+                <button
+                  id="addToCartButton"
+                  class="btn main-button w-75 mt-3"
+                  <%= product.quantity === 0 ? 'disabled' : '' %>>
+                  Add to Cart
+                </button>
+              </div>
+              <hr />
+
+              <!-- Select reviews from 1 to 5 and comment input field -->
+              <div class="ratings">
+  <h5>Leave a Review</h5>
+  <div class="form-floating mb-3">
+    <input
+      type="number"
+      class="form-control"
+      id="rating"
+      min="1"
+      max="5"
+      step="1"
+      placeholder="Rating"
+    />
+    <label for="rating">Rating</label>
+  </div>
+  <div class="form-floating my-3">
+    <textarea
+      class="form-control"
+      placeholder="Leave a comment here"
+      id="comment"
+      style="height: 100px"
+    ></textarea>
+    <label for="comment">Comment</label>
+  </div>
+  <button class="btn main-button w-100 mt-3" id="submitReviewButton">
+    Submit Review
+  </button>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const addToCartButton = document.getElementById('addToCartButton');
+        const quantitySelect = document.getElementById('productQuantity');
+
+        addToCartButton.addEventListener('click', async () => {
+          const productId = '<%= product.id %>';
+          const quantity = parseInt(quantitySelect.value, 10);
+
+          try {
+            const response = await fetch('/api/v1/orders/cart', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ productId, quantity }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              alert('Product added to cart successfully!');
+            } else {
+              alert(data.message || 'Failed to add product to cart.');
+            }
+          } catch (error) {
+            console.error('Error adding product to cart:', error);
+            alert('An unexpected error occurred. Please try again.');
+          }
+        });
+      });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const submitReviewButton = document.getElementById('submitReviewButton');
+
+    submitReviewButton.addEventListener('click', async () => {
+      const ratingInput = document.getElementById('rating');
+      const commentInput = document.getElementById('comment');
+
+      const rating = parseInt(ratingInput.value, 10);
+      const comment = commentInput.value.trim();
+      const productId = '<%= product.id %>'; // The current product's ID
+
+      if (!rating || !comment) {
+        alert('Please provide a rating and a comment.');
+        return;
+      }
+
+      if (rating < 1 || rating > 5) {
+        alert('Rating must be between 1 and 5.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/v1/reviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ rating, comment, productId }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Review submitted successfully!');
+          window.location.reload(); // Refresh the page to reflect the new review
+        } else {
+          alert(data.msg || 'Failed to submit the review.');
+        }
+      } catch (error) {
+        console.error('Error submitting review:', error);
+        alert('An unexpected error occurred. Please try again.');
+      }
+    });
+  });  
+    </script>
+  </body>
+</html>

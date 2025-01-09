@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="login my-5">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="images/Side Image.png" alt="" class="img-fluid" />
+        </div>
+        <div class="col-md-6 m-auto p-5 text-center text-md-start">
+          <h3>Log in to Exclusive</h3>
+          <p>Enter your details below</p>
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                type="email"
+                class="form-control w-75 m-auto m-md-0"
+                id="email"
+                name="email"
+                placeholder="Email or Phone Number"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control w-75 m-auto m-md-0"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+
+            <div
+              class="button d-flex gap-5 align-items-center justify-content-center justify-content-md-start"
+            >
+              <button type="submit" class="btn main-button">Login</button>
+              <p class="main-color mt-3">Forget Password?</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value.trim();
+
+          if (!email || !password) {
+            alert('Please provide both email and password!');
+            return;
+          }
+
+          try {
+            const response = await fetch('/api/v1/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email, password }),
+            });
+
+            // Handle the response
+            const data = await response.json();
+            if (response.ok) {
+              alert('Login successful!');
+              window.location.href = '/';
+            } else {
+              alert(data.message || 'Login failed! Check your credentials.');
+            }
+          } catch (error) {
+            console.error('Error during login:', error);
+            alert('An unexpected error occurred. Please try again.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

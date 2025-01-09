@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+:root {
+  --primary-color: #db4444;
+  --secondary-color: #a52a2a;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+}
+
+.top-discount a {
+  color: #fff;
+}
+
+@media (max-width: 576px) {
+  .language {
+    display: none !important;
+  }
+}
+
+.sidebar a {
+  color: #000;
+}
+
+ul li .active {
+  border-bottom: 1px solid #000;
+  color: #000;
+  font-weight: 600;
+  padding-bottom: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+ul li a:hover {
+  border-bottom: 1px solid #000;
+  color: #000;
+  font-weight: 600;
+  padding-bottom: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.main-color {
+  color: var(--primary-color);
+}
+
+.heading {
+  color: var(--primary-color);
+  border-left: 4px solid var(--primary-color);
+  padding-left: 10px;
+}
+
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.main-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.main-button:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.secondary-button {
+  outline: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.secondary-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.categories .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.categories .card:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.categories .card p:hover {
+  color: white;
+}
+
+.icons svg {
+  background-color: #2f2e30;
+  color: white;
+}
+
+.footer {
+  background-color: #000;
+  color: white;
+}
+
+.custom-placeholder::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.custom-placeholder svg {
+  color: white;
+}
+
+.about a {
+  color: gray;
+}
+
+.about-icons .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.about-icons .card:hover {
+  background-color: var(--primary-color);
+  color: white !important;
+}
+
+.contact .card-icon svg {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.discount {
+  top: 50px !important;
+}
+
+.discount-2 {
+  top: 100px !important;
+}
+
+.products svg {
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.products span {
+  font-size: 1.5rem;
+}
+
+.products svg:hover {
+  color: var(--primary-color) !important;
+}
+
+.product-icons svg {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.all-icons svg {
+  transition: all 0.3s ease-in-out;
+}
+.all-icons svg:hover {
+  color: var(--primary-color) !important;
+}
+
+.card-products img {
+  width: 150px;
+}
+
+.account li a:hover {
+  color: var(--primary-color) !important;
+}
+
+.account .active {
+  color: var(--primary-color) !important;
+}
+
+h5 .active {
+  color: var(--primary-color) !important;
+}
+
+.not-found {
+  font-size: 5rem;
+}
+
+nav .buttons {
+  font-size: 1.2rem;
+}
+
+nav .buttons svg {
+  color: black !important;
+  transition: all 0.3s ease-in-out;
+}
+
+nav .buttons svg:hover {
+  color: var(--primary-color) !important;
+}

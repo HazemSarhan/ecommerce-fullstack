@@ -1,0 +1,174 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  profilePicture String?
+  role UserRoles @default(USER)
+  googleId  String?  @unique
+  reviews Review[]
+  cart Cart[]
+  orders Order[]
+  products Product[]
+  address Address[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  address String
+  city String
+  state String
+  zipCode String
+  phoneNumber String
+  emailAddress String
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  description String?
+  products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  price Float
+  totalPrice Float
+  discount Discount? @relation(fields: [discountId], references: [id])
+  discountId Int?
+  about String[]
+  stockAvailablity StockAvailablity @default(IN_STOCK)
+  quantity Int
+  reviews Review[]
+  picture String
+  numberOfReviews Int @default(0)
+  averageRatings Int @default(0)
+  bestSelling Boolean @default(false)
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  cart Cart[]
+  orderItems OrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Discount {
+  id Int @id @default(autoincrement())
+  code String
+  discount Int
+  products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  rating Int
+  comment String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, productId])
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  totalPrice Float
+  paymentId   String?
+  status OrderStatus @default(PENDING)
+  orderItems  OrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model OrderItem {
+  id          Int         @id @default(autoincrement())
+  orderId     Int
+  order       Order       @relation(fields: [orderId], references: [id]) // Define the relation here
+  productId   Int
+  product     Product     @relation(fields: [productId], references: [id])
+  quantity    Int
+  priceAtTime Float
+}
+
+model Contact {
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  phoneNumber String
+  message String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentOptions {
+  id Int @id @default(autoincrement())
+  cardHolderName String
+  cardNumber String
+  last4 String
+  expireDate String
+  cvv String?
+}
+
+enum StockAvailablity {
+  IN_STOCK
+  OUT_OF_STOCK
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+enum UserRoles {
+  ADMIN
+  USER
+}
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="about">
+      <div class="container">
+        <div class="top mt-5 pt-5">
+          <span class="text-muted"
+            ><a href="/">Home</a> /
+            <span class="text-black"> 404 Error</span></span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="error d-flex justify-content-center flex-column align-items-center"
+    >
+      <h1 class="fw-bold mb-5 not-found">404 Not Found</h1>
+      <p>Your visited page not found. You may go home page.</p>
+      <button class="main-button my-5 border-0">
+        <a href="./" class="text-white">Back to homepage</a>
+      </button>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="about my-5">
+      <div class="container">
+        <div class="top mt-5 pt-5">
+          <span class="text-muted"
+            ><a href="/">Home</a> /
+            <span class="text-black"> My Account</span></span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="my-account my-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <aside>
+              <h5>Manage My Account</h5>
+              <ul class="account list-unstyled p-3">
+                <li class="mb-3">
+                  <a href="/account" class="text-muted">My Profile</a>
+                </li>
+                <li class="mb-3">
+                  <a href="/account-address" class="text-muted">My Address</a>
+                </li>
+                <li>
+                  <a href="/account-payment" class="text-muted"
+                    >My Payment Options</a
+                  >
+                </li>
+              </ul>
+
+              <h5 class="mb-3">
+                <a href="/orders" class="text-black active">My Orders</a>
+              </h5>
+              <h5>
+                <a href="/wishlist" class="text-black">My WishList</a>
+              </h5>
+            </aside>
+          </div>
+          <div class="col-md-8">
+            <div class="card p-5 rounded-0 mt-3">
+              <h4 class="main-color">Orders History</h4>
+              <% if (orders && orders.length > 0) { %>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% orders.forEach((order) => { %>
+                  <tr>
+                    <th scope="row"><%= order.id %></th>
+                    <td>
+                      <%= new Date(order.createdAt).toLocaleDateString() %>
+                    </td>
+                    <td><%= order.status %></td>
+                    <td>$<%= order.totalPrice.toFixed(2) %></td>
+                    <td>
+                      <a
+                        href="/success?order_id=<%= order.id %>"
+                        class="btn main-button btn-sm"
+                      >
+                        View
+                      </a>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <% } else { %>
+              <p class="text-center mt-4">You have no orders yet.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

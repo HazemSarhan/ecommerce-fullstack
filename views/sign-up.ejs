@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <!-- Navbar -->
+    <%- include('./partials/nav.ejs') %>
+    <section class="sign-up my-5">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="images/Side Image.png" alt="" class="img-fluid" />
+        </div>
+        <div class="col-md-6 m-auto p-5 text-center text-md-start">
+          <h3>Create an account</h3>
+          <p>Enter your details below</p>
+          <form id="registerForm" enctype="multipart/form-data">
+            <!-- Name -->
+            <div class="mb-3">
+              <label for="exampleInputName1" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control w-75 m-auto m-md-0"
+                id="name"
+                name="name"
+                placeholder="Name"
+                required
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control w-75 m-auto m-md-0"
+                id="email"
+                name="email"
+                placeholder="Email or Phone Number"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Password</label
+              >
+              <input
+                type="password"
+                class="form-control w-75 m-auto m-md-0"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+
+            <!-- Profile Picture -->
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Profile Picture</label>
+              <input
+                class="form-control w-75 m-auto m-md-0"
+                type="file"
+                id="profilePicture"
+                name="profilePicture"
+                accept="image/*"
+              />
+            </div>
+
+            <div class="button d-grid w-75 gap-3 m-auto m-md-0">
+              <button type="submit" class="btn main-button">
+                Create Account
+              </button>
+              <button type="button" class="btn secondary-button">
+                <i class="fa-brands fa-google fa-xl me-3"></i>
+                Sign up with Google
+              </button>
+
+              <div class="text d-flex gap-2 align-items-center">
+                <h5>Already have an account?</h5>
+                <ul class="list-group">
+                  <li class="list-unstyled">
+                    <a href="/login.html" class="active">Log In</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const registerForm = document.getElementById('registerForm');
+
+        registerForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(registerForm);
+          const name = formData.get('name');
+          const email = formData.get('email');
+          const password = formData.get('password');
+          const profilePicture = formData.get('profilePicture');
+
+          if (!name || !email || !password) {
+            alert('Please provide all required fields!');
+            return;
+          }
+
+          try {
+            const payload = new FormData();
+            payload.append('name', name);
+            payload.append('email', email);
+            payload.append('password', password);
+            if (profilePicture) {
+              payload.append('profilePicture', profilePicture);
+            }
+
+            const response = await fetch('/api/v1/auth/register', {
+              method: 'POST',
+              body: payload,
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              alert('Registration successful!');
+              window.location.href = '/';
+            } else {
+              alert(data.message || 'Registration failed!');
+            }
+          } catch (error) {
+            console.error('Error during registration:', error);
+            alert('An unexpected error occurred. Please try again.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
